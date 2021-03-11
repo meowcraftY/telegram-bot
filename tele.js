@@ -29,6 +29,8 @@ async function stars() {
 })
        return client.sendMessage(msg.chat.id, `Follow sosmed admin Ya!`, {replyMarkup})
     })
+    client.on(['/neon'], async (msg, args) => {
+       O
 client.start()
 }
 stars()
