@@ -14,7 +14,7 @@ async function stars() {
         var kybd = client.keyboard([
             ["/menu","/info"],
         ], {resize: true})
-        await client.sendPhoto(msg.chat.id, './lib/src/icon.jpg', {caption: `🤖 MEOW BOT 🤖
+        await client.sendPhoto(msg.chat.id, './lib/src/icon.jpeg', {caption: `🤖 MEOW BOT 🤖
 
 ◪ Hai ${msg.from.username}!
 
