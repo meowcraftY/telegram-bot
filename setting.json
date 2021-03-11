@@ -1,13 +1,4 @@
 {
-  "limitCount": 25,
-  "memberLimit": 25,
-  "groupLimit": 10,
-  "melodickey": "administrator",
-  "vhtearkey": "YOUR_APIKEY",
-  "tobzkey": "BotWeA",
-  "mtc": false,
-  "restartState": false,
-  "restartId": "undefined",
-  "banChats": false,
-  "Rest": true
+	"token": "1641770737:AAE9-cMKvBoF1fic_I1VfiRy_roUExehPy4",
+	"meowkey": "MengLungCu"
 }
