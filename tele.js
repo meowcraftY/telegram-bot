@@ -28,15 +28,15 @@ async function stars() {
      })
      client.on('/info', async (msg, args) => {
         client.sendPhoto(msg.chat.id, "./lib/src/icon.jpeg", {caption: "◪ INFO\n\n• BotName: Meow-Bot\n• Owner: @MeowCraftG\n• Prefix: /\nStatus: Soon\n\n⬤ SOSMED\n\n⎔ YT: MeowCraft\n⎔ IG: @meowcraft_"})
-    })
-    client.on(/^\/return ([\s\S]+)/, async (msg, args) => {
+     })
+     client.on(/^\/return ([\s\S]+)/, async (msg, args) => {
         const isOwner = await owner(msg.from.username)
         if (!isOwner) return msg.reply.text("Khusus Owner!")
         teks1 = msg.text
         teks2 = teks1.replace("/return", "")
         client.sendMessage(msg.chat.id, JSON.stringify(eval(teks2), null,'\t'))
-    })
-    client.on(/^\/eval ([\s\S]+)/, async (msg, args) => {
+     })
+     client.on(/^\/eval ([\s\S]+)/, async (msg, args) => {
         const isOwner = await owner(msg.from.username)
         if (!isOwner) return msg.reply.text("Khusus Owner!")
         teks = msg.text.replace('/eval', '')
