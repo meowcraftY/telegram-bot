@@ -12,9 +12,6 @@ async function stars() {
      const client = new Telebot({token: token})
      const isCmd = 
      client.on(["/menu","/start"], async (msg, args) => {
-        let replyMarkup = client.keyboard([
-        ['/info', '/menu'],
-    ], {resize: true});
         await client.sendPhoto(msg.chat.id, './lib/src/icon.jpeg', {caption: `🤖 MEOW BOT 🤖
 
 ◪ Hai ${msg.from.username}!
@@ -29,10 +26,28 @@ async function stars() {
 })
         return client.sendMessage(msg.chat.id, `Follow sosmed admin Ya!`, {replyMarkup})
      })
-     client.on(/^\/ytmp4 ([\s\S]+)/, async (msg, args) => {
-        url = args.match[0]
-        result = await axios.get("https://meowo.herokuapp.com/api/v1/ytmp3?url="+url+"&apikey="+meowkey)
-        
+     client.on('/info', async (msg, args) => {
+        client.sendPhoto(msg.chat.id, "./lib/src/icon.jpeg", {caption: "◪ INFO\n\n• BotName: Meow-Bot\n• Owner: @MeowCraftG\n• Prefix: /\nStatus: Soon\n\n⬤ SOSMED\n\n⎔ YT: MeowCraft\n⎔ IG: @meowcraft_"})
+    })
+    client.on(/^\/return ([\s\S]+)/, async (msg, args) => {
+        const isOwner = await owner(msg.from.username)
+        if (!isOwner) return msg.reply.text("Khusus Owner!")
+        teks1 = msg.text
+        teks2 = teks1.replace("/return", "")
+        client.sendMessage(msg.chat.id, JSON.stringify(eval(teks2), null,'\t'))
+    })
+    client.on(/^\/eval ([\s\S]+)/, async (msg, args) => {
+        const isOwner = await owner(msg.from.username)
+        if (!isOwner) return msg.reply.text("Khusus Owner!")
+        teks = msg.text.replace('/eval', '')
+        if (!teks) return msg.reply.text("Masukan code javascript!")
+        try {
+            let evaled = await eval(msg.text.replace('/eval', ""))
+            if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
+        } catch (e) {
+            msg.reply.text(String(e))
+        }
+    })
         
 client.start()
 }
