@@ -7,7 +7,7 @@ const axios = require('axios')
 const fs = require('fs')
 const { token, meowkey } = setting
 
-async function stars() {
+async function starts() {
      console.log(banner.string)
      console.log(color("[SERVER]", "orange"), color("Server Started!"))
      const client = new Telebot({token: token})
@@ -63,4 +63,4 @@ async function stars() {
         
 client.start()
 }
-stars()
+starts()
