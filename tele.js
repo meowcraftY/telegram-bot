@@ -8,11 +8,18 @@ const fs = require('fs')
 const { token, meowkey } = setting
 
 async function starts() {
+     const PORT = process.env.PORT || 3000
+     global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
+
+     if (opts['server']) {
      let express = require('express')
-     let app = express()
-     let PORT = 9000
-     app.set('port', PORT);
+     global.app = express()
+     app.all('*', async (req, res) => {
+       await global.conn.connect().catch(console.log)
+       res.end(await qrcode.toBuffer(global.qr))
+     })
      app.listen(PORT, () => console.log('App listened on port', PORT))
+}
      console.log(banner.string)
      console.log(color("[SERVER]", "orange"), color("Server Started!"))
      const client = new Telebot({token: token})
