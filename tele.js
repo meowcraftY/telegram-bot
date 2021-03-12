@@ -15,11 +15,10 @@ async function starts() {
      let express = require('express')
      global.app = express()
      app.all('*', async (req, res) => {
-       await global.conn.connect().catch(console.log)
-       res.end(await qrcode.toBuffer(global.qr))
+       res.send({status: "online"})
      })
      app.listen(PORT, () => console.log('App listened on port', PORT))
-}
+     }
      console.log(banner.string)
      console.log(color("[SERVER]", "orange"), color("Server Started!"))
      const client = new Telebot({token: token})
