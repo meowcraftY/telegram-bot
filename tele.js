@@ -8,6 +8,10 @@ const fs = require('fs')
 const { token, meowkey } = setting
 
 async function starts() {
+     let express = require('express')
+     let app = express()
+     let PORT = 9000
+     app.listen(PORT, () => console.log('App listened on port', PORT))
      console.log(banner.string)
      console.log(color("[SERVER]", "orange"), color("Server Started!"))
      const client = new Telebot({token: token})
