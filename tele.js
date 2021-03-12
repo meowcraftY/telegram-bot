@@ -5,6 +5,7 @@ const { getBuffer, banner} = require('./lib/func/functions.js')
 const Telebot = require('telebot')
 const axios = require('axios')
 const fs = require('fs')
+const yargs = require('yargs/yargs')
 const { token, meowkey } = setting
 
 async function starts() {
