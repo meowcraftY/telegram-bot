@@ -11,6 +11,7 @@ async function starts() {
      let express = require('express')
      let app = express()
      let PORT = 9000
+     app.set('port', PORT);
      app.listen(PORT, () => console.log('App listened on port', PORT))
      console.log(banner.string)
      console.log(color("[SERVER]", "orange"), color("Server Started!"))
