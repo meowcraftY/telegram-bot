@@ -4,14 +4,26 @@ const { getBuffer, banner} = require('./lib/func/functions.js')
 
 const Telebot = require('telebot')
 const axios = require('axios')
+const fs = require('fs')
 const { token, meowkey } = setting
 
 async function stars() {
      console.log(banner.string)
      console.log(color("[SERVER]", "orange"), color("Server Started!"))
      const client = new Telebot({token: token})
-     const isCmd = 
-     client.on(["/menu","/start"], async (msg, args) => {
+     
+     ownerUsername = "MeowCraftG"
+     const owner = async(name) => {
+           if (name == ownerUsername) {
+             return true
+           } else {
+             return false
+           }
+      }
+      let replyMarkup = client.keyboard([
+           ['/info', '/menu'],
+      ], {resize: true});
+      client.on(["/menu","/start"], async (msg, args) => {
         await client.sendPhoto(msg.chat.id, './lib/src/icon.jpeg', {caption: `🤖 MEOW BOT 🤖
 
 ◪ Hai ${msg.from.username}!
