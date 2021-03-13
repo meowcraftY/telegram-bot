@@ -23,7 +23,7 @@ async function starts() {
      })
 
      mess = {
-              success: "✔️ Suksess ✔️"
+              success: "✔️ Suksess ✔️",
               error: "[❗] Terjadi Kesalahan"
               only: {
                       owner: "[❗] Perintah ini hanya bisa digunakan Owner-Bot!"
