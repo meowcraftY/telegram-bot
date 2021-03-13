@@ -22,13 +22,11 @@ async function starts() {
         }
      })
 
-     mess = {
-              success: "✔️ Suksess ✔️",
-              error: "[❗] Terjadi Kesalahan",
-              only: {
-                      owner: "[❗] Perintah ini hanya bisa digunakan Owner-Bot!"
-              }
-     }
+     let mess = {}
+     mess.success = "✔️ Berhasil ✔️"
+     mess.error = "[❗] Terjadi kesalahan"
+     mess.only.admin = "[❗] Perintah ini hanya bisa digunakan oleh admin"
+     mess.only.owner = "[❗] Perintah ini hanya bisa digunakan oleh Owner Bot"
 
      ownerUsername = "MeowCraftG"
      const owner = async(name) => {
