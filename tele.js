@@ -9,17 +9,6 @@ const yargs = require('yargs/yargs')
 const { token, meowkey } = setting
 
 async function starts() {
-     const PORT = process.env.PORT || 3000
-     global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
-
-     if (opts['server']) {
-     let express = require('express')
-     global.app = express()
-     app.all('*', async (req, res) => {
-       res.send({status: "online"})
-     })
-     app.listen(PORT, () => console.log('App listened on port', PORT))
-     }
      console.log(banner.string)
      console.log(color("[SERVER]", "orange"), color("Server Started!"))
      const client = new Telebot({token: token})
@@ -41,7 +30,8 @@ async function starts() {
 ◪ Hai ${msg.from.username}!
 
 ⎔ /info
-⎔ /coming
+⎔ /neon [teks]
+⎔ /sky [teks]
 
 ◆ SOSIAL MEDA
 ♡ IG: @meowcraft_
@@ -71,6 +61,16 @@ async function starts() {
         } catch (e) {
             msg.reply.text(String(e))
         }
+    })
+    client.on(/^\/neon ([\s\S]+)/, async (msg, args) => {
+        const teks = msg.text.replace('/neon', '')
+        data = await axios.get('http://meowo.herokuapp.com/api/v1/textmaker/glowing?teks='+teks+'&apikey='+meowkey)
+        client.sendPhoto(msg.chat.id, data.data.result, {caption: mess.success})
+    })
+    client.on((/^\/sky ([\s\S]+)/, async (msg, args) => {
+        const teks = msg.text.replace('/sky', '')
+        data = await axios.get('http://meowo.herokuapp.com/api/v1/textmaker/shadow?teks='+teks+'&apikey=+'meowkey)
+        client.sendPhoto(msg.chat.id, data.data.result, {caption: Ness.success})
     })
         
 client.start()
