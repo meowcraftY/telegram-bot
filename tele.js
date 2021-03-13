@@ -46,9 +46,21 @@ async function starts() {
 
 ◪ Hai ${msg.from.username}!
 
-⎔ /info
+[] = Itu harus di isi
+() = Itu adalah info fitur
+
+◆ FUN MENU
+
 ⎔ /neon [teks]
 ⎔ /sky [teks]
+
+◆ ADMIN MENU
+⎔ /delete (replyChatBot)
+
+◆ INFORMASI
+
+⎔ /info
+⎔ /owner
 
 ◆ SOSIAL MEDA
 ♡ IG: @meowcraft_
@@ -90,12 +102,17 @@ async function starts() {
         client.sendPhoto(msg.chat.id, data.data.result, {caption: mess.success})
     })
     client.on(/^\/delete ([\s\S]+)/, async (msg, args) => {
+        if (msg.chat.all_members_are_administrators == false) return client.sendMessage(msg.chat.id, mess.only.administrators, {replyToMessage: msg.message_id})
         if (msg.reply_to_message == undefined) return client.sendMessage(msg.chat.id, "Reply chat bot om", {replyToMessage: msg.message_id})
         if (msg.reply_to_message.from.username == "Meow_Telegram_Bot") {
            client.deleteMessage(msg.chat.id, msg.reply_to_message.message_id)
         } else {
            client.sendMessage(msg.chat.id, "Hanya bisa menghapus pesan dariku", {replyToMessage: msg.message_id})
         }
+    })
+    client.on('/owner', async (msg, args) => {
+        kontak = await client.sendContact(msg.chat.id, "6285772526036", "Owner", "Meow-Bot")
+        client.sendContact(msg.chat.id, "Silahkan Chat Owner @MeowCraftG Jika Menemukan Bug Pada Bot!", {replyToMessage: kontak.message_id})
     })
         
 client.start()
