@@ -12,7 +12,21 @@ async function starts() {
      console.log(banner.string)
      console.log(color("[SERVER]", "orange"), color("Server Started!"))
      const client = new Telebot({token: token})
-     
+     client.on('newChatMembers', async (d) => {
+        try {
+              console.log(d)
+              try {
+                    pp = await client.getUserProfilePhotos(d.new_chat_participant.id)
+              } catch {
+                    pp = "https://i.ibb.co/HFrfCzm/20210130-100315.png"
+              }
+              buff = await getBuffer(pp)
+              teks = `Hai @${d.new_chat_participant} Selamat datang👋`
+              client.sendPhoto(d.chat.id, buff, {caption: teks})
+        } catch (e) {
+              console.log("Error :", color(e, 'red'))
+        }
+     })
      ownerUsername = "MeowCraftG"
      const owner = async(name) => {
            if (name == ownerUsername) {
