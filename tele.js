@@ -89,6 +89,14 @@ async function starts() {
         data = await axios.get('http://meowo.herokuapp.com/api/v1/textmaker/shadow?teks='+teks+'&apikey='+meowkey)
         client.sendPhoto(msg.chat.id, data.data.result, {caption: mess.success})
     })
+    client.on(/^\/delete ([\s\S]+)/, async (msg, args) => {
+        if (msg.reply_to_message == undefined) return client.sendMessage(msg.chat.id, "Reply chat bot om", {replyToMessage: msg.message_id})
+        if (msg.reply_to_message.from.username == "Meow_Telegram_Bot") {
+           client.deleteMessage(msg.chat.id, msg.reply_to_message.message_id)
+        } else {
+           client.sendMessage(msg.chat.id, "Hanya bisa menghapus pesan dariku", {replyToMessage: msg.message_id})
+        }
+    })
         
 client.start()
 }
