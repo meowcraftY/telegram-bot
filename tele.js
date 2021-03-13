@@ -15,14 +15,8 @@ async function starts() {
      client.on('newChatMembers', async (d) => {
         try {
               console.log(d)
-              try {
-                    pp = await client.getUserProfilePhotos(d.new_chat_participant.id)
-              } catch {
-                    pp = "https://i.ibb.co/HFrfCzm/20210130-100315.png"
-              }
-              buff = await getBuffer(pp)
-              teks = `Hai @${d.new_chat_participant} Selamat datang👋`
-              client.sendPhoto(d.chat.id, buff, {caption: teks})
+              teks = `Hai Member Baru Selamat Datang Di ${d.chat.title}\nSemoga betah yak><`
+              client.sendMessage(d.chat.id, teks)
         } catch (e) {
               console.log("Error :", color(e, 'red'))
         }
