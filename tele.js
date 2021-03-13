@@ -110,7 +110,7 @@ async function starts() {
     })
     client.on('/owner', async (msg, args) => {
         kontak = await client.sendContact(msg.chat.id, "6285772526036", "Owner", "Meow-Bot")
-        client.sendContact(msg.chat.id, "Silahkan Chat Owner @MeowCraftG Jika Menemukan Bug Pada Bot!", {replyToMessage: kontak.message_id})
+        client.sendMessage(msg.chat.id, "Silahkan Chat Owner @MeowCraftG Jika Menemukan Bug Pada Bot!", {replyToMessage: kontak.message_id})
     })
         
 client.start()
