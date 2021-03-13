@@ -21,6 +21,15 @@ async function starts() {
               console.log("Error :", color(e, 'red'))
         }
      })
+
+     mess = {
+              success: "✔️ Suksess ✔️"
+              error: "[❗] Terjadi Kesalahan"
+              only: {
+                      owner: "[❗] Perintah ini hanya bisa digunakan Owner-Bot!"
+              }
+     }
+
      ownerUsername = "MeowCraftG"
      const owner = async(name) => {
            if (name == ownerUsername) {
