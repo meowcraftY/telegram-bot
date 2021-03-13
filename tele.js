@@ -24,7 +24,7 @@ async function starts() {
 
      mess = {
               success: "✔️ Suksess ✔️",
-              error: "[❗] Terjadi Kesalahan"
+              error: "[❗] Terjadi Kesalahan",
               only: {
                       owner: "[❗] Perintah ini hanya bisa digunakan Owner-Bot!"
               }
@@ -81,13 +81,13 @@ async function starts() {
     })
     client.on(/^\/neon ([\s\S]+)/, async (msg, args) => {
         const teks = msg.text.replace('/neon', '')
-        data = await axios.get('http://meowo.herokuapp.com/api/v1/textmaker/glowing?teks='+teks+'&apikey='+meowkey)
-        client.sendPhoto(msg.chat.id, data.data.result, {caption: mess.success})
+        result = await axios.get('http://meowo.herokuapp.com/api/v1/textmaker/glowing?teks='+teks+'&apikey='+meowkey)
+        client.sendPhoto(msg.chat.id, result.data.result, {caption: mess.success})
     })
-    client.on((/^\/sky ([\s\S]+)/, async (msg, args) => {
+    client.on(/^\/sky ([\s\S]+)/, async (msg, args) => {
         const teks = msg.text.replace('/sky', '')
-        data = await axios.get('http://meowo.herokuapp.com/api/v1/textmaker/shadow?teks='+teks+'&apikey=+'meowkey)
-        client.sendPhoto(msg.chat.id, data.data.result, {caption: Ness.success})
+        data = await axios.get('http://meowo.herokuapp.com/api/v1/textmaker/shadow?teks='+teks+'&apikey='+meowkey)
+        client.sendPhoto(msg.chat.id, data.data.result, {caption: mess.success})
     })
         
 client.start()
