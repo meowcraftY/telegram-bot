@@ -22,11 +22,14 @@ async function starts() {
         }
      })
 
-     let mess = {}
-     mess.success = "✔️ Berhasil ✔️"
-     mess.error = "[❗] Terjadi kesalahan"
-     mess.only.admin = "[❗] Perintah ini hanya bisa digunakan oleh admin"
-     mess.only.owner = "[❗] Perintah ini hanya bisa digunakan oleh Owner Bot"
+     mess = {
+              success: "✔️ Berhasil ✔️",
+              error: "[❗] Terjadi kesalahan",
+              only: {
+                      admin: "[❗] Perintah ini hanya bisa digunakan admin!",
+                      owner: "[❗] Perintah ini hanya bisa digunakan Owner Bot!"
+              }
+     }
 
      ownerUsername = "MeowCraftG"
      const owner = async(name) => {
@@ -35,6 +38,9 @@ async function starts() {
            } else {
              return false
            }
+      }
+      const isCmd = (cmd, nameuser) => {
+           console.log("[",color("EXEC"), "]", `Command ${color(cmd)} From ${nameuser}`)
       }
       let replyMarkup = client.keyboard([
            ['/info', '/menu'],
@@ -71,6 +77,7 @@ async function starts() {
         client.sendPhoto(msg.chat.id, "./lib/src/icon.jpeg", {caption: "◪ INFO\n\n• BotName: Meow-Bot\n• Owner: @MeowCraftG\n• Prefix: /\nStatus: Soon\n\n⬤ SOSMED\n\n⎔ YT: MeowCraft\n⎔ IG: @meowcraft_", replyToMessage: msg.message_id})
      })
      client.on(/^\/return ([\s\S]+)/, async (msg, args) => {
+        isCmd("/return", msg.from.username)
         const isOwner = await owner(msg.from.username)
         if (!isOwner) return msg.reply.text("Khusus Owner!")
         teks1 = msg.text
