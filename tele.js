@@ -43,7 +43,7 @@ async function starts() {
            console.log("[",color("EXEC", "lime"), "]", `Command ${color(cmd, "lime")} From ${color(nameuser, "lime")}`)
       }
       let replyMarkup = client.keyboard([
-           ['/info', '/menu'],
+           ['/info', '/menu','/owner'],
       ], {resize: true});
       client.on(["/menu","/start"], async (msg, args) => {
         isCmd("/menu", msg.from.username)
