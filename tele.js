@@ -62,7 +62,7 @@ async function starts() {
 ◆ EDUKASI
 
 ⎔ /corona
-⎔ /Wiki [query]
+⎔ /wiki [query]
 
 ◆ ADMIN MENU
 
