@@ -59,6 +59,10 @@ async function starts() {
 ⎔ /neon [teks]
 ⎔ /sky [teks]
 
+◆ EDUKASI
+
+⎔ /corona
+
 ◆ ADMIN MENU
 ⎔ /delete (replyChatBot)
 
@@ -125,6 +129,11 @@ async function starts() {
         isCmd("/owner", msg.from.username)
         kontak = await client.sendContact(msg.chat.id, "6285772526036", "Owner", "Meow-Bot")
         client.sendMessage(msg.chat.id, "Silahkan Chat Owner @MeowCraftG Jika Menemukan Bug Pada Bot!", {replyToMessage: kontak.message_id})
+    })
+    client.on('/corona', async (msg, args) => {
+        isCmd('/corona', msg.from.username)
+        corona = await axios.get("https://api.kawalcorona.com/indonesia")
+        client.sendMessage(msg.chat.id, `🏥 COVID-19 INDONESIA 🏥\n\n• Positif: ${corona.data[0].positif}\n• Sembuh: ${corona.data[0].sembuh}\n• Meninggal: ${corona.data[0].meninggal}`, {replyToMessage: msg.message_id})
     })
         
 client.start()
