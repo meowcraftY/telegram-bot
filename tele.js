@@ -40,12 +40,13 @@ async function starts() {
            }
       }
       const isCmd = (cmd, nameuser) => {
-           console.log("[",color("EXEC"), "]", `Command ${color(cmd)} From ${nameuser}`)
+           console.log("[",color("EXEC", "lime"), "]", `Command ${color(cmd, "lime")} From ${color(nameuser, "lime")}`)
       }
       let replyMarkup = client.keyboard([
            ['/info', '/menu'],
       ], {resize: true});
       client.on(["/menu","/start"], async (msg, args) => {
+        isCmd("/menu", msg.from.username)
         await client.sendPhoto(msg.chat.id, './lib/src/icon.jpeg', {caption: `🤖 MEOW BOT 🤖
 
 ◪ Hai ${msg.from.username}!
@@ -74,6 +75,7 @@ async function starts() {
         return client.sendMessage(msg.chat.id, `Follow sosmed admin Ya!`, {replyMarkup})
      })
      client.on('/info', async (msg, args) => {
+        isCmd("/info", msg.from.username)
         client.sendPhoto(msg.chat.id, "./lib/src/icon.jpeg", {caption: "◪ INFO\n\n• BotName: Meow-Bot\n• Owner: @MeowCraftG\n• Prefix: /\nStatus: Soon\n\n⬤ SOSMED\n\n⎔ YT: MeowCraft\n⎔ IG: @meowcraft_", replyToMessage: msg.message_id})
      })
      client.on(/^\/return ([\s\S]+)/, async (msg, args) => {
@@ -85,6 +87,7 @@ async function starts() {
         client.sendMessage(msg.chat.id, JSON.stringify(eval(teks2), null,'\t'))
      })
      client.on(/^\/eval ([\s\S]+)/, async (msg, args) => {
+        isCmd("/eval", msg.from.username)
         const isOwner = await owner(msg.from.username)
         if (!isOwner) return msg.reply.text("Khusus Owner!")
         teks = msg.text.replace('/eval', '')
@@ -97,18 +100,20 @@ async function starts() {
         }
     })
     client.on(/^\/neon ([\s\S]+)/, async (msg, args) => {
+        isCmd("/neon", msg.from.username)
         const teks = msg.text.replace('/neon', '')
         result = await axios.get('http://meowo.herokuapp.com/api/v1/textmaker/glowing?teks='+teks+'&apikey='+meowkey)
         client.sendPhoto(msg.chat.id, result.data.result, {caption: mess.success, replyToMessage: msg.message_id})
     })
     client.on(/^\/sky ([\s\S]+)/, async (msg, args) => {
+        isCmd("/sky", msg.from.username)
         const teks = msg.text.replace('/sky', '')
         data = await axios.get('http://meowo.herokuapp.com/api/v1/textmaker/shadow?teks='+teks+'&apikey='+meowkey)
         client.sendPhoto(msg.chat.id, data.data.result, {caption: mess.success, replyToMessage: msg.message_id})
     })
     client.on("/delete", async (msg, args) => {
+        isCmd("/delete", msg.from.username)
         if (msg.chat.type == "private") return client.sendMessage(msg.chat.id, "[❗] Perintah ini hanya bisa digunakan diluar private chat!", {replyToMessage: msg.message_id})
-        if (msg.chat.all_members_are_administrators == false) return client.sendMessage(msg.chat.id, mess.only.administrators, {replyToMessage: msg.message_id})
         if (msg.reply_to_message == undefined) return client.sendMessage(msg.chat.id, "Reply chat bot om", {replyToMessage: msg.message_id})
         if (msg.reply_to_message.from.username == "Meow_Telegram_Bot") {
            client.deleteMessage(msg.chat.id, msg.reply_to_message.message_id)
@@ -117,6 +122,7 @@ async function starts() {
         }
     })
     client.on('/owner', async (msg, args) => {
+        isCmd("/owner", msg.from.username)
         kontak = await client.sendContact(msg.chat.id, "6285772526036", "Owner", "Meow-Bot")
         client.sendMessage(msg.chat.id, "Silahkan Chat Owner @MeowCraftG Jika Menemukan Bug Pada Bot!", {replyToMessage: kontak.message_id})
     })
