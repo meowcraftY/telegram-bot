@@ -1,5 +1,3 @@
-# Telegram-Bot
-
 # Install
 ```bash
 pkg install git
