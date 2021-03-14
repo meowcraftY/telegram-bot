@@ -45,7 +45,7 @@ async function starts() {
       let replyMarkup = client.keyboard([
            ['/info', '/menu','/owner'],
       ], {resize: true});
-      client.on(["/menu","/start"], async (msg, args) => {
+      client.on(["/menu","/start","/help"], async (msg, args) => {
         isCmd("/menu", msg.from.username)
         await client.sendPhoto(msg.chat.id, './lib/src/icon.jpeg', {caption: `🤖 MEOW BOT 🤖
 
