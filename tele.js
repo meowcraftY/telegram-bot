@@ -95,7 +95,7 @@ async function starts() {
      client.on('/info', async (msg, args) => {
         isCmd("/info", msg.from.username)
         uptime = process.uptime()
-        client.sendPhoto(msg.chat.id, "./lib/src/icon.jpeg", {caption: "◪ INFO\n\n• BotName: Meow-Bot\n• Owner: @MeowCraftG\n• Prefix: /\n• Status: Soon\n• Runtime: ${kyun(uptime)}\n\n⬤ SOSMED\n\n⎔ YT: MeowCraft\n⎔ IG: @meowcraft_", replyToMessage: msg.message_id})
+        client.sendPhoto(msg.chat.id, "./lib/src/icon.jpeg", {caption: `◪ INFO\n\n• BotName: Meow-Bot\n• Owner: @MeowCraftG\n• Prefix: /\n• Status: Soon\n• Runtime: ${kyun(uptime)}\n\n⬤ SOSMED\n\n⎔ YT: MeowCraft\n⎔ IG: @meowcraft_`, replyToMessage: msg.message_id})
      })
      client.on(/^\/return ([\s\S]+)/, async (msg, args) => {
         isCmd("/return", msg.from.username)
