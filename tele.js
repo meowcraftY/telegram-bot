@@ -138,8 +138,9 @@ async function starts() {
         client.sendMessage(msg.chat.id, `🏥 COVID-19 INDONESIA 🏥\n\n• Positif: ${corona.data[0].positif}\n• Sembuh: ${corona.data[0].sembuh}\n• Meninggal: ${corona.data[0].meninggal}`, {replyToMessage: msg.message_id})
     })
     client.on(/^\/wiki ([\s\S]+)/, async (msg, args) => {
-        isCmd("/Wiki", msg.from.username)
+        isCmd("/wiki", msg.from.username)
         wikiq = msg.text.replace('/wiki', '')
+        if (wikiq == "" || wikiq == undefined) return client.sendMessage(msg.chat.id, "Usage:\n/wiki [query]\n\nContoh:\n/wiki Indonesia", {replyToMessage: msg.message_id})
         wiki = await axios.get("https://tobz-api.herokuapp.com/api/wiki?q="+wikiq+"&apikey="+tobzkey)
         client.sendMessage(msg.chat.id, `Hasil dari pencarian Wikipedia:\n\n${wiki.data.result}`, {replyToMessage: msg.message_id})
     })
