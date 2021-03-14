@@ -8,6 +8,18 @@ const fs = require('fs')
 const yargs = require('yargs/yargs')
 const { token, meowkey, tobzkey } = setting
 
+function kyun(seconds){
+  function pad(s){
+    return (s < 10 ? '0' : '') + s;
+  }
+  var hours = Math.floor(seconds / (60*60));
+  var minutes = Math.floor(seconds % (60*60) / 60);
+  var seconds = Math.floor(seconds % 60);
+
+  //return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds)
+  return `${pad(hours)} Jam ${pad(minutes)} Menit ${pad(seconds)} Detik`
+}
+
 async function starts() {
      console.log(banner.string)
      console.log(color("[SERVER]", "orange"), color("Server Started!"))
@@ -82,7 +94,8 @@ async function starts() {
      })
      client.on('/info', async (msg, args) => {
         isCmd("/info", msg.from.username)
-        client.sendPhoto(msg.chat.id, "./lib/src/icon.jpeg", {caption: "◪ INFO\n\n• BotName: Meow-Bot\n• Owner: @MeowCraftG\n• Prefix: /\n• Status: Soon\n\n⬤ SOSMED\n\n⎔ YT: MeowCraft\n⎔ IG: @meowcraft_", replyToMessage: msg.message_id})
+        uptime = process.uptime()
+        client.sendPhoto(msg.chat.id, "./lib/src/icon.jpeg", {caption: "◪ INFO\n\n• BotName: Meow-Bot\n• Owner: @MeowCraftG\n• Prefix: /\n• Status: Soon\n• Runtime: ${kyun(uptime)}\n\n⬤ SOSMED\n\n⎔ YT: MeowCraft\n⎔ IG: @meowcraft_", replyToMessage: msg.message_id})
      })
      client.on(/^\/return ([\s\S]+)/, async (msg, args) => {
         isCmd("/return", msg.from.username)
