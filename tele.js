@@ -68,7 +68,7 @@ async function starts() {
         return client.sendMessage(msg.chat.id, `Follow sosmed admin Ya!`, {replyMarkup})
      })
      client.on('/info', async (msg, args) => {
-        client.sendPhoto(msg.chat.id, "./lib/src/icon.jpeg", {caption: "◪ INFO\n\n• BotName: Meow-Bot\n• Owner: @MeowCraftG\n• Prefix: /\nStatus: Soon\n\n⬤ SOSMED\n\n⎔ YT: MeowCraft\n⎔ IG: @meowcraft_"})
+        client.sendPhoto(msg.chat.id, "./lib/src/icon.jpeg", {caption: "◪ INFO\n\n• BotName: Meow-Bot\n• Owner: @MeowCraftG\n• Prefix: /\nStatus: Soon\n\n⬤ SOSMED\n\n⎔ YT: MeowCraft\n⎔ IG: @meowcraft_", replyToMessage: msg.message_id})
      })
      client.on(/^\/return ([\s\S]+)/, async (msg, args) => {
         const isOwner = await owner(msg.from.username)
@@ -86,18 +86,18 @@ async function starts() {
             let evaled = await eval(msg.text.replace('/eval', ""))
             if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
         } catch (e) {
-            msg.reply.text(String(e))
+            client.sendMessage(msg.chat.id, String(e), {replyToMessage: msg.message_id})
         }
     })
     client.on(/^\/neon ([\s\S]+)/, async (msg, args) => {
         const teks = msg.text.replace('/neon', '')
         result = await axios.get('http://meowo.herokuapp.com/api/v1/textmaker/glowing?teks='+teks+'&apikey='+meowkey)
-        client.sendPhoto(msg.chat.id, result.data.result, {caption: mess.success})
+        client.sendPhoto(msg.chat.id, result.data.result, {caption: mess.success, replyToMessage: msg.message_id})
     })
     client.on(/^\/sky ([\s\S]+)/, async (msg, args) => {
         const teks = msg.text.replace('/sky', '')
         data = await axios.get('http://meowo.herokuapp.com/api/v1/textmaker/shadow?teks='+teks+'&apikey='+meowkey)
-        client.sendPhoto(msg.chat.id, data.data.result, {caption: mess.success})
+        client.sendPhoto(msg.chat.id, data.data.result, {caption: mess.success, replyToMessage: msg.message_id})
     })
     client.on(/^\/delete ([\s\S]+)/, async (msg, args) => {
         if (msg.chat.all_members_are_administrators == false) return client.sendMessage(msg.chat.id, mess.only.administrators, {replyToMessage: msg.message_id})
