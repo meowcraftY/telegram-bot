@@ -12,3 +12,8 @@ npm i
 ```bash
 npm start
 ```
+
+# Setting
+```bash
+Ubah [`Token bot`]('https://github.com/')
+```
