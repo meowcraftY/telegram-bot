@@ -62,8 +62,10 @@ async function starts() {
 ◆ EDUKASI
 
 ⎔ /corona
+⎔ /Wiki [query]
 
 ◆ ADMIN MENU
+
 ⎔ /delete (replyChatBot)
 
 ◆ INFORMASI
@@ -135,7 +137,13 @@ async function starts() {
         corona = await axios.get("https://api.kawalcorona.com/indonesia")
         client.sendMessage(msg.chat.id, `🏥 COVID-19 INDONESIA 🏥\n\n• Positif: ${corona.data[0].positif}\n• Sembuh: ${corona.data[0].sembuh}\n• Meninggal: ${corona.data[0].meninggal}`, {replyToMessage: msg.message_id})
     })
-        
+    client.on(/^\/wiki ([\s\S]+)/, async (msg, args) => {
+        isCmd("/Wiki", msg.from.username)
+        wikiq = msg.text.replace('/wiki', '')
+        wiki = await axios.get("https://tobz-api.herokuapp.com/api/wiki?q="+wikiq+"&apikey="+tobzkey)
+        client.sendMessage(msg.chat.id, `Hasil dari pencarian Wikipedia:\n\n${wiki.data.result}`, {replyToMessage: msg.message_id})
+    })
+
 client.start()
 }
 starts()
