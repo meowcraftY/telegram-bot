@@ -6,7 +6,7 @@ const Telebot = require('telebot')
 const axios = require('axios')
 const fs = require('fs')
 const yargs = require('yargs/yargs')
-const { token, meowkey } = setting
+const { token, meowkey, tobzkey } = setting
 
 async function starts() {
      console.log(banner.string)
