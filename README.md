@@ -2,8 +2,8 @@
 
 # Install
 ```bash
-sudo apt install git
-sudo apt install nodejs
+pkg install git
+pkg install nodejs
 git clone https://github.com/meowcraftY/telegram-bot
 npm i
 ```
