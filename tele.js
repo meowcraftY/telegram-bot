@@ -99,7 +99,8 @@ async function starts() {
         data = await axios.get('http://meowo.herokuapp.com/api/v1/textmaker/shadow?teks='+teks+'&apikey='+meowkey)
         client.sendPhoto(msg.chat.id, data.data.result, {caption: mess.success, replyToMessage: msg.message_id})
     })
-    client.on(/^\/delete ([\s\S]+)/, async (msg, args) => {
+    client.on("/delete", async (msg, args) => {
+        if (msg.chat.type == "private") return client.sendMessage(msg.chat.id, "[❗] Perintah ini hanya bisa digunakan diluar private chat!", {replyToMessage: msg.message_id})
         if (msg.chat.all_members_are_administrators == false) return client.sendMessage(msg.chat.id, mess.only.administrators, {replyToMessage: msg.message_id})
         if (msg.reply_to_message == undefined) return client.sendMessage(msg.chat.id, "Reply chat bot om", {replyToMessage: msg.message_id})
         if (msg.reply_to_message.from.username == "Meow_Telegram_Bot") {
