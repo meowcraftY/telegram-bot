@@ -157,6 +157,18 @@ async function starts() {
         wiki = await axios.get("https://tobz-api.herokuapp.com/api/wiki?q="+wikiq+"&apikey="+tobzkey)
         client.sendMessage(msg.chat.id, `Hasil dari pencarian Wikipedia:\n\n${wiki.data.result}`, {replyToMessage: msg.message_id})
     })
+    client.on('/rules', async (msg, args) => {
+        rules = `⛔ Rules Penggunaan Bot ⛔
+
+1. Dilarang mengirim nsfw kepada bot
+2. Bot tidak menyediakan fitur nsfw
+3. Dilarang melakukan spamming kepada bot
+4. Dilarang menyebar link phising kepada bot
+
+Silahkan hubungi @MeowCraftG jika menemukan bug
+`
+        client.sendMessage(msg.chat.id, rules, {replyToMessage: msg.message_id})
+    })
 
 client.start()
 }
