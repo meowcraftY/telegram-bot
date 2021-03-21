@@ -60,6 +60,7 @@ async function starts() {
       ], {resize: true});
       client.on(["/menu","/start","/help"], async (msg, args) => {
         isCmd("/menu", msg.from.username)
+        pushname = msg.from.username ? msg.from.username : msg.from.first_name
         await client.sendPhoto(msg.chat.id, './lib/src/icon.jpeg', {caption: `🤖 MEOW BOT 🤖
 
 ◪ Hai ${msg.from.username}!
