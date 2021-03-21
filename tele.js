@@ -28,7 +28,7 @@ async function starts() {
         try {
               console.log(d)
               name = d.new_chat_participant.username ? d.new_chat_participant.username : d.new_chat_participant.firstname
-              teks = `Hai ${Member Baru Selamat Datang Di ${d.chat.title}\nSemoga betah yak><`
+              teks = `Hai ${name}! Selamat Datang Di ${d.chat.title}\nSemoga betah yak><`
               client.sendMessage(d.chat.id, teks)
         } catch (e) {
               console.log("Error :", color(e, 'red'))
