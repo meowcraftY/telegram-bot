@@ -3,174 +3,35 @@ const setting = require('./config.json')
 const { getBuffer, banner} = require('./lib/func/functions.js')
 
 const Telebot = require('telebot')
+const { Configuration, OpenAIApi } = require('openai')
 const axios = require('axios')
 const fs = require('fs')
 const yargs = require('yargs/yargs')
-const { token, meowkey, tobzkey } = setting
 
-function kyun(seconds){
-  function pad(s){
-    return (s < 10 ? '0' : '') + s;
-  }
-  var hours = Math.floor(seconds / (60*60));
-  var minutes = Math.floor(seconds % (60*60) / 60);
-  var seconds = Math.floor(seconds % 60);
-
-  //return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds)
-  return `${pad(hours)} Jam ${pad(minutes)} Menit ${pad(seconds)} Detik`
-}
+const { token, openai_key } = setting
+const configuration = new Configuration({apiKey: openai_key})
+const openai = new OpenAIApi(configuration)
 
 async function starts() {
      console.log(banner.string)
      console.log(color("[SERVER]", "orange"), color("Server Started!"))
      const client = new Telebot({token: token})
-     client.on('newChatMembers', async (d) => {
-        try {
-              console.log(d)
-              name = d.new_chat_participant.username ? d.new_chat_participant.username : d.new_chat_participant.first_name
-              teks = `Hai ${name}! Selamat Datang Di ${d.chat.title}\nSemoga betah yak><`
-              client.sendMessage(d.chat.id, teks)
-        } catch (e) {
-              console.log("Error :", color(e, 'red'))
-        }
-     })
-
-     mess = {
-              success: "✔️ Berhasil ✔️",
-              error: "[❗] Terjadi kesalahan",
-              only: {
-                      admin: "[❗] Perintah ini hanya bisa digunakan admin!",
-                      owner: "[❗] Perintah ini hanya bisa digunakan Owner Bot!"
-              }
+     const isCmd = (cmd, nameuser) => {
+          console.log("[",color("EXEC", "lime"), "]", `Command ${color(cmd, "lime")} From ${color(nameuser, "lime")}`)
      }
+     let replyMarkup = client.keyboard([
+          ['/info', '/menu','/owner'],
+     ], {resize: true});
 
-     ownerUsername = "MeowCraftG"
-     const owner = async(name) => {
-           if (name == ownerUsername) {
-             return true
-           } else {
-             return false
-           }
-      }
-      const isCmd = (cmd, nameuser) => {
-           console.log("[",color("EXEC", "lime"), "]", `Command ${color(cmd, "lime")} From ${color(nameuser, "lime")}`)
-      }
-      let replyMarkup = client.keyboard([
-           ['/info', '/menu','/owner'],
-      ], {resize: true});
-      client.on(["/menu","/start","/help"], async (msg, args) => {
-        isCmd("/menu", msg.from.username)
-        pushname = msg.from.username ? msg.from.username : msg.from.first_name
-        await client.sendPhoto(msg.chat.id, './lib/src/icon.jpeg', {caption: `🤖 MEOW BOT 🤖
-
-◪ Hai ${msg.from.username}!
-
-[] = Itu harus di isi
-() = Itu adalah info fitur
-
-◆ FUN MENU
-
-⎔ /neon [teks]
-⎔ /sky [teks]
-
-◆ EDUKASI
-
-⎔ /corona
-⎔ /wiki [query]
-
-◆ ADMIN MENU
-
-⎔ /delete (replyChatBot)
-
-◆ INFORMASI
-
-⎔ /info
-⎔ /owner
-
-◆ SOSIAL MEDA
-♡ IG: @meowcraft_
-♡ YT: meowcraft
-`
-})
-        return client.sendMessage(msg.chat.id, `Follow sosmed admin Ya!`, {replyMarkup})
+     client.on(['/start','/help'], async (msg) => {
+         return msg.reply.text("Hi, I'am Meow Assistant\n\nCan i help you?");
      })
-     client.on('/info', async (msg, args) => {
-        isCmd("/info", msg.from.username)
-        uptime = process.uptime()
-        client.sendPhoto(msg.chat.id, "./lib/src/icon.jpeg", {caption: `◪ INFO\n\n• BotName: Meow-Bot\n• Owner: @MeowCraftG\n• Prefix: /\n• Status: Soon\n• Runtime: ${kyun(uptime)}\n\n⬤ SOSMED\n\n⎔ YT: MeowCraft\n⎔ IG: @meowcraft_`, replyToMessage: msg.message_id})
-     })
-     client.on(/^\/return ([\s\S]+)/, async (msg, args) => {
-        isCmd("/return", msg.from.username)
-        const isOwner = await owner(msg.from.username)
-        if (!isOwner) return msg.reply.text("Khusus Owner!")
-        teks1 = msg.text
-        teks2 = teks1.replace("/return", "")
-        client.sendMessage(msg.chat.id, JSON.stringify(eval(teks2), null,'\t'))
-     })
-     client.on(/^\/eval ([\s\S]+)/, async (msg, args) => {
-        isCmd("/eval", msg.from.username)
-        const isOwner = await owner(msg.from.username)
-        if (!isOwner) return msg.reply.text("Khusus Owner!")
-        teks = msg.text.replace('/eval', '')
-        if (!teks) return msg.reply.text("Masukan code javascript!")
-        try {
-            let evaled = await eval(msg.text.replace('/eval', ""))
-            if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
-        } catch (e) {
-            client.sendMessage(msg.chat.id, String(e), {replyToMessage: msg.message_id})
-        }
-    })
-    client.on(/^\/neon ([\s\S]+)/, async (msg, args) => {
-        isCmd("/neon", msg.from.username)
-        const teks = msg.text.replace('/neon', '')
-        result = await axios.get('http://meowo.herokuapp.com/api/v1/textmaker/glowing?teks='+teks+'&apikey='+meowkey)
-        client.sendPhoto(msg.chat.id, result.data.result, {caption: mess.success, replyToMessage: msg.message_id})
-    })
-    client.on(/^\/sky ([\s\S]+)/, async (msg, args) => {
-        isCmd("/sky", msg.from.username)
-        const teks = msg.text.replace('/sky', '')
-        data = await axios.get('http://meowo.herokuapp.com/api/v1/textmaker/shadow?teks='+teks+'&apikey='+meowkey)
-        client.sendPhoto(msg.chat.id, data.data.result, {caption: mess.success, replyToMessage: msg.message_id})
-    })
-    client.on("/delete", async (msg, args) => {
-        isCmd("/delete", msg.from.username)
-        if (msg.chat.type == "private") return client.sendMessage(msg.chat.id, "[❗] Perintah ini hanya bisa digunakan diluar private chat!", {replyToMessage: msg.message_id})
-        if (msg.reply_to_message == undefined) return client.sendMessage(msg.chat.id, "Reply chat bot om", {replyToMessage: msg.message_id})
-        if (msg.reply_to_message.from.username == "Meow_Telegram_Bot") {
-           client.deleteMessage(msg.chat.id, msg.reply_to_message.message_id)
-        } else {
-           client.sendMessage(msg.chat.id, "Hanya bisa menghapus pesan dariku", {replyToMessage: msg.message_id})
-        }
-    })
-    client.on('/owner', async (msg, args) => {
-        isCmd("/owner", msg.from.username)
-        kontak = await client.sendContact(msg.chat.id, "6285772526036", "Owner", "Meow-Bot")
-        client.sendMessage(msg.chat.id, "Silahkan Chat Owner @MeowCraftG Jika Menemukan Bug Pada Bot!", {replyToMessage: kontak.message_id})
-    })
-    client.on('/corona', async (msg, args) => {
-        isCmd('/corona', msg.from.username)
-        corona = await axios.get("https://api.kawalcorona.com/indonesia")
-        client.sendMessage(msg.chat.id, `🏥 COVID-19 INDONESIA 🏥\n\n• Positif: ${corona.data[0].positif}\n• Sembuh: ${corona.data[0].sembuh}\n• Meninggal: ${corona.data[0].meninggal}`, {replyToMessage: msg.message_id})
-    })
-    client.on(/^\/wiki ([\s\S]+)/, async (msg, args) => {
-        isCmd("/wiki", msg.from.username)
-        wikiq = msg.text.replace('/wiki', '')
-        if (wikiq == "" || wikiq == undefined) return client.sendMessage(msg.chat.id, "Usage:\n/wiki [query]\n\nContoh:\n/wiki Indonesia", {replyToMessage: msg.message_id})
-        wiki = await axios.get("https://tobz-api.herokuapp.com/api/wiki?q="+wikiq+"&apikey="+tobzkey)
-        client.sendMessage(msg.chat.id, `Hasil dari pencarian Wikipedia:\n\n${wiki.data.result}`, {replyToMessage: msg.message_id})
-    })
-    client.on('/rules', async (msg, args) => {
-        rules = `⛔ Rules Penggunaan Bot ⛔
 
-1. Dilarang mengirim nsfw kepada bot
-2. Bot tidak menyediakan fitur nsfw
-3. Dilarang melakukan spamming kepada bot
-4. Dilarang menyebar link phising kepada bot
-
-Silahkan hubungi @MeowCraftG jika menemukan bug
-`
-        client.sendMessage(msg.chat.id, rules, {replyToMessage: msg.message_id})
-    })
+     client.on('text', async (msg) => {
+         if (msg.text.startsWith('/start')) return
+         chatgpt = await openai.createChatCompletion({model:'gpt-3.5-turbo',messages: [{role:'user',content: msg.text}]})
+         client.sendMessage(msg.chat.id,chatgpt.data.choices[0].message.content, {replyToMessage: msg.message_id})
+     })
 
 client.start()
 }
