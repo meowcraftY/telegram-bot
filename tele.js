@@ -12,7 +12,7 @@ const { token, openai_key } = setting
 const configuration = new Configuration({apiKey: "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"})
 const openai = new OpenAIApi(configuration)
 
-async function starts() {
+
      console.log(banner.string)
      console.log(color("[SERVER]", "orange"), color("Server Started!"))
      const client = new Telebot({token: token})
@@ -34,5 +34,3 @@ async function starts() {
      })
 
 client.start()
-}
-starts()
