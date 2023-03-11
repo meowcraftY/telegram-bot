@@ -33,7 +33,7 @@ const openai = new OpenAIApi(configuration)
          return client.sendMessage(msg.chat.id,chatgpt.data.choices[0].message.content, {replyToMessage: msg.message_id})
      })
 
-     client.on(['/genimg'], async (msg) {
+     client.on(['/genimg'], async (msg) => {
          img_prompt = msg.text.replace('/genimg', '')
          if (img_prompt == "" || img_prompt == undefined) return msg.reply.text('No query found on your request, please check /menu again', { asReply: true })
          msg.reply.text('Processing your request, please wait.', { asReply: true })
