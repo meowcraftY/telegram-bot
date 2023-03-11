@@ -9,7 +9,7 @@ const fs = require('fs')
 const yargs = require('yargs/yargs')
 
 const { token, openai_key } = setting
-const configuration = new Configuration({apiKey: "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"})
+const configuration = new Configuration({apiKey: "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"})
 const openai = new OpenAIApi(configuration)
 
 
