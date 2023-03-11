@@ -16,7 +16,6 @@
     "node-fetch": "^2.6.1",
     "telebot": "^1.4.1",
     "yargs": "^16.2.0",
-    "ytdl-core": "^4.5.0"
   },
   "devDependencies": {},
   "scripts": {
