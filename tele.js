@@ -30,8 +30,7 @@ const openai = new OpenAIApi(configuration)
      client.on('text', async (msg) => {
          if (msg.text.startsWith('/start')) return
          chatgpt = await openai.createChatCompletion({model:'gpt-3.5-turbo',messages: [{role:'user',content: msg.text}]})
-         console.log(chatgpt)
-         client.sendMessage(msg.chat.id,chatgpt.data.choices[0].message.content, {replyToMessage: msg.message_id})
+         return client.sendMessage(msg.chat.id,chatgpt.data.choices[0].message.content, {replyToMessage: msg.message_id})
      })
 
 client.start()
