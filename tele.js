@@ -28,9 +28,17 @@ const openai = new OpenAIApi(configuration)
      })
 
      client.on('text', async (msg) => {
-         if (msg.text.startsWith('/start')) return
+         if (msg.text.startsWith('/start') || msg.text.startsWith('/genimg')) return
          chatgpt = await openai.createChatCompletion({model:'gpt-3.5-turbo',messages: [{role:'user',content: msg.text}]})
          return client.sendMessage(msg.chat.id,chatgpt.data.choices[0].message.content, {replyToMessage: msg.message_id})
+     })
+
+     client.on(['/genimg'], async (msg) {
+         img_prompt = msg.text.replace('/genimg', '')
+         if (img_prompt == "" || img_prompt == undefined) return msg.reply.text('No query found on your request, please check /menu again', { asReply: true })
+         msg.reply.text('Processing your request, please wait.', { asReply: true })
+         generate_img = await openai.createImage({prompt: img_prompt, n: 1, size: '1024x1024'})
+         return msg.reply.photo(generate_img.data.data[0].url, { asReply: true })
      })
 
 client.start()
