@@ -24,7 +24,7 @@ async function starts() {
      ], {resize: true});
 
      client.on(['/start','/help'], async (msg) => {
-         return msg.reply.text("Hi, I'am Meow Assistant\n\nCan i help you?");
+         msg.reply.text("Hi, I'am Meow Assistant\n\nCan i help you?");
      })
 
      client.on('text', async (msg) => {
