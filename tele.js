@@ -23,12 +23,12 @@ const openai = new OpenAIApi(configuration)
           ['/info', '/menu','/owner'],
      ], {resize: true});
 
-     client.on(['/start','/help'], async (msg) => {
-         msg.reply.text("Hi, I'am Meow Assistant\n\nCan i help you?");
+     client.on(['/start','/help','/menu'], async (msg) => {
+         return msg.reply.text("Hi, I'am Meow Assistant 👋\n\nThis is a list of available commands:\n• Type anything to talk to the chat bot or ask something like theoretical physics, history, etc. (like chatgpt)\n• /genimg - Generate image from text, example: /genimg beautiful sunset\n\nNote: these bots have limited knowledge about the world and events after 2021 and may sometimes generate incorrect information.", { asReply: true })
      })
 
      client.on('text', async (msg) => {
-         if (msg.text.startsWith('/start') || msg.text.startsWith('/genimg')) return
+         if (msg.text.startsWith('/start') || msg.text.startsWith('/help') || msg.text.startsWith('/menu') || msg.text.startsWith('/genimg')) return
          chatgpt = await openai.createChatCompletion({model:'gpt-3.5-turbo',messages: [{role:'user',content: msg.text}]})
          return client.sendMessage(msg.chat.id,chatgpt.data.choices[0].message.content, {replyToMessage: msg.message_id})
      })
