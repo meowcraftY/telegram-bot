@@ -36,7 +36,7 @@ global.db = []
              posisiDataChat = pushData - 1
          }
          chatgpt = await openai.createChatCompletion({model:'gpt-3.5-turbo',messages: [{role:'system',content: "You are Meow Assistant, an assitant that uses openai gpt 3.5 model, answer as concisely as possible."}, ...global.db[posisiDataChat].messages, {role: "user", content: msg.text}]})
-         if (global.db[posisiDataChat].messages.length === 12) {
+         if (global.db[posisiDataChat].messages.length === 18) {
              global.db[posisiDataChat].messages.splice(0, 2)
          }
          global.db[posisiDataChat].messages.push({...chatgpt.data.choices[0].message},{"role":"user", "content":msg.text})
