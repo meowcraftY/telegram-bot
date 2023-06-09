@@ -14,15 +14,15 @@ const openai = new OpenAIApi(configuration)
 
 global.db = []
 
-     console.log(banner.string)
-     console.log(color("[SERVER]", "orange"), color("Server Started!"))
-     const client = new Telebot({token: token})
-     const isCmd = (cmd, nameuser) => {
-          console.log("[",color("EXEC", "lime"), "]", `Command ${color(cmd, "lime")} From ${color(nameuser, "lime")}`)
-     }
-     let replyMarkup = client.keyboard([
-          ['/info', '/menu','/owner'],
-     ], {resize: true});
+console.log(banner.string)
+console.log(color("[SERVER]", "orange"), color("Server Started!"))
+const client = new Telebot({token: token})
+const isCmd = (cmd, nameuser) => {
+    console.log("[",color("EXEC", "lime"), "]", `Command ${color(cmd, "lime")} From ${color(nameuser, "lime")}`)
+}
+let replyMarkup = client.keyboard([
+     ['/search', '/next','/loves'],
+], {resize: true});
 
      client.on(['/start','/help','/menu'], async (msg) => {
          return msg.reply.text("Hi, I'am Meow Assistant 👋\n\nThis is a list of available commands:\n• Type anything to talk to the chat bot or ask something like theoretical physics, history, etc. (like chatgpt)\n• /genimg - Generate image from text, example: /genimg beautiful sunset\n\nNote: these bots have limited knowledge about the world and events after 2021 and may sometimes generate incorrect information.", { asReply: true })
