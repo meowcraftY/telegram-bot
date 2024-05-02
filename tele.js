@@ -7,6 +7,12 @@ const { Configuration, OpenAIApi } = require('openai')
 const axios = require('axios')
 const fs = require('fs')
 const yargs = require('yargs/yargs')
+const express = require('express')
+const app = express()
+
+app.get('/', function (req, res) {
+  res.send('Hello World')
+})
 
 const { token, openai_key } = setting
 const configuration = new Configuration({apiKey: "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"})
@@ -53,3 +59,4 @@ let replyMarkup = client.keyboard([
      })
 
 client.start()
+app.listen(8000)
